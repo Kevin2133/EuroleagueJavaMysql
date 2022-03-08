@@ -347,6 +347,10 @@ public class MySql {
   }
   return null;
 }
+ 
+static Squadre[] getSquadre (Connection conn){
+ 
+}
 
  
 }

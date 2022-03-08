@@ -1,0 +1,11 @@
+mysql -u sql11465103 -ppLfcXmIgUb -h sql11.freemysqlhosting.net sql11465103
+
+mysqldump -hlocalhost -uroot -pSandy$001 euroleague| mysql -hsql11.freemysqlhosting.net -usql11465103 -ppLfcXmIgUb sql11465103 
+(Bisogna cambiare metodo encrypting method)
+
+mysqldump -hlocalhost -uroot -pSandy$001 euroleague > euroleagueE.sql
+
+mysql -u sql11465103 -ppLfcXmIgUb -h sql11.freemysqlhosting.net sql11465103 < D:\kevin\scuola\superiori\informatica\Java\db\euroleagueEx.sql
+
+mysql -u root -pSandy$001 -h localhost euroleague < D:\kevin\scuola\superiori\informatica\Java\db\euroleagueEx.sql
+

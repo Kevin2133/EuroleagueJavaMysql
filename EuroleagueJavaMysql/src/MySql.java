@@ -349,7 +349,40 @@ public class MySql {
 }
  
 static Squadre[] getSquadre (Connection conn){
- 
+ try{
+
+        String idSquadra, squadra;
+         PreparedStatement pstmt = conn.prepareStatement(SELALLSQUADRE);   
+      
+         ResultSet rs = pstmt.executeQuery();
+      
+         int l = 0;
+         int cont = 0;
+      
+         while(rs.next()){
+          l++;
+         }
+      
+         Squadre squadre[] = new Squadre[l];
+      
+         rs = pstmt.executeQuery();
+      
+         while(rs.next()){
+            idSquadra = rs.getString("idSquadra");
+            squadra = rs.getString("squadra");
+            
+            Squadre s = new Squadre(idSquadra, squadra);
+           squadre[cont] = s;
+           //System.out.println(stats[cont].getGamecode());
+      
+           cont++;
+         }
+      
+         return squadre;
+        }catch(Exception ex){
+      
+        }
+        return null;
 }
 
  

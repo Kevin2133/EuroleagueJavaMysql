@@ -122,7 +122,6 @@ public class App {
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         int scelta;
-        Giocatori squadra[] = new Giocatori[20];
 
 
 
@@ -131,17 +130,15 @@ public class App {
 
         Connection conn = MySql.InitializeDb();
         int maxGc = MySql.getMaxPartita(conn);
-        int round = maxGc / 9;
-        Statistiche stats[] = new Statistiche[round];
+        int round = maxGc / 9;        
         
 
 
         do{
             System.out.println("0. esci");
-            System.out.println("1. ................");
-            System.out.println("2. ................");
-            System.out.println("3. ................");
-            System.out.println("4. tutte le statistiche");
+            System.out.println("1. tutte le squadre");
+            System.out.println("2. tutti i giocatori");
+            System.out.println("3. tutte le statistiche");
             
 
             scelta = sc.nextInt();
@@ -151,15 +148,18 @@ public class App {
                 case 0:
                     break;
                 case 1:
-                            
+                    Squadre squadre[] = MySql.getSquadre(conn) ;
+                    for(Squadre s : squadre){
+                        s.printSquadra();
+                    }
                     break;
                 case 2:
-                    
-                    break;
+                    Giocatori gioc[] = MySql.getGioc(conn);
+                    for(Giocatori g : gioc){
+                        g.printGiocatore();
+                    }
+                    break;                                               
                 case 3:
-                    
-                    break;                                
-                case 4:
                     Statistiche statistiche[] = MySql.getStat(conn);
                     for(int i = 0; i < statistiche.length; i++){
                         statistiche[i].printStat();

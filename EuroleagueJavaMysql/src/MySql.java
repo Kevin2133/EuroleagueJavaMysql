@@ -25,6 +25,13 @@ public class MySql {
 
  //SELECT ALL
  private final static String SELALLSTAT = "SELECT * FROM statistiche";
+ private final static String SELALLSQUADRE = "SELECT * FROM squadre";
+ private final static String SELALLGIOC = "SELECT * FROM giocatori";
+ private final static String SELALLSQUADREPARTITE = "SELECT * FROM squadre_partite";
+ private final static String SELALLPARTITE = "SELECT * FROM partite";
+
+
+
 
  //MAX GAMECODE
  private final static String SELECTMAXPARTITA = "SELECT MAX(gamecode) FROM partite";
@@ -348,42 +355,156 @@ public class MySql {
   return null;
 }
  
-static Squadre[] getSquadre (Connection conn){
- try{
+ static Squadre[] getSquadre(Connection conn){
+  try{
 
-        String idSquadra, squadra;
-         PreparedStatement pstmt = conn.prepareStatement(SELALLSQUADRE);   
+    String idSquadra, squadra;
+    PreparedStatement pstmt = conn.prepareStatement(SELALLSQUADRE);   
+  
+    ResultSet rs = pstmt.executeQuery();
+  
+    int l = 0;
+    int cont = 0;
+  
+    while(rs.next()){
+      l++;
+    }
+  
+    Squadre squadre[] = new Squadre[l];
+  
+    rs = pstmt.executeQuery();
+  
+    while(rs.next()){    
       
-         ResultSet rs = pstmt.executeQuery();
-      
-         int l = 0;
-         int cont = 0;
-      
-         while(rs.next()){
-          l++;
-         }
-      
-         Squadre squadre[] = new Squadre[l];
-      
-         rs = pstmt.executeQuery();
-      
-         while(rs.next()){
-            idSquadra = rs.getString("idSquadra");
-            squadra = rs.getString("squadra");
-            
-            Squadre s = new Squadre(idSquadra, squadra);
-           squadre[cont] = s;
-           //System.out.println(stats[cont].getGamecode());
-      
-           cont++;
-         }
-      
-         return squadre;
-        }catch(Exception ex){
-      
-        }
-        return null;
-}
+      idSquadra = rs.getString("idSquadra");
+      squadra = rs.getString("squadra");        
+        
+      Squadre s = new Squadre(idSquadra, squadra);
+      squadre[cont] = s;
+      //System.out.println(stats[cont].getGamecode());
+    
+      cont++;
+    }
+  
+    return squadre;
+  }catch(Exception ex){
+  
+  }
+  return null;   
+ }
 
- 
+ static Giocatori[] getGioc(Connection conn){
+  try{
+
+    String idGiocatore, nome, cognome, idSquadra;
+    PreparedStatement pstmt = conn.prepareStatement(SELALLGIOC);   
+  
+    ResultSet rs = pstmt.executeQuery();
+  
+    int l = 0;
+    int cont = 0;
+  
+    while(rs.next()){
+      l++;
+    }
+  
+    Giocatori[] gioc = new Giocatori[l];
+    rs = pstmt.executeQuery();
+  
+    while(rs.next()){    
+      
+      idSquadra = rs.getString("idSquadra");
+      idGiocatore = rs.getString("idGiocatore");     
+      nome = rs.getString("nome");
+      cognome = rs.getString("cognome");   
+        
+      Giocatori g = new Giocatori(idGiocatore, nome, cognome, idSquadra);
+      gioc[cont] = g;
+      //System.out.println(stats[cont].getGamecode());
+    
+      cont++;
+    }
+  
+    return gioc;
+  }catch(Exception ex){
+  
+  }
+  return null;   
+ }
+
+ static SquadrePartite[] getSquadrePartite(Connection conn){
+  try{
+
+    String idSquadra;
+    int gamecode;
+    PreparedStatement pstmt = conn.prepareStatement(SELALLSQUADREPARTITE);   
+  
+    ResultSet rs = pstmt.executeQuery();
+  
+    int l = 0;
+    int cont = 0;
+  
+    while(rs.next()){
+      l++;
+    }
+  
+    SquadrePartite squadrePartite[] = new SquadrePartite[l];
+  
+    rs = pstmt.executeQuery();
+  
+    while(rs.next()){    
+      
+      idSquadra = rs.getString("idSquadra");
+      gamecode = rs.getInt("gamecode");        
+        
+      SquadrePartite s = new SquadrePartite(idSquadra, gamecode);
+      squadrePartite[cont] = s;
+      //System.out.println(stats[cont].getGamecode());
+    
+      cont++;
+    }
+  
+    return squadrePartite;
+  }catch(Exception ex){
+  
+  }
+  return null;   
+ }
+
+ static Partite[] getPartite(Connection conn){
+  try{
+
+    int gamecode;
+    PreparedStatement pstmt = conn.prepareStatement(SELALLPARTITE);   
+  
+    ResultSet rs = pstmt.executeQuery();
+  
+    int l = 0;
+    int cont = 0;
+  
+    while(rs.next()){
+      l++;
+    }
+  
+    Partite partite[] = new Partite[l];
+  
+    rs = pstmt.executeQuery();
+  
+    while(rs.next()){    
+      
+      gamecode = rs.getInt("gamecode");
+        
+      Partite p = new Partite(gamecode);
+      partite[cont] = p;
+      //System.out.println(stats[cont].getGamecode());
+    
+      cont++;
+    }
+  
+    return partite;
+  }catch(Exception ex){
+  
+  }
+  return null;   
+ }
 }
